@@ -15,7 +15,7 @@ void printStack(std::stack<int> s, const std::string& stackName) {
 
 int main() {
     
-    int variant = 8; 
+    int variant = 7; 
     int S = variant * 5 + 50;
 
 
