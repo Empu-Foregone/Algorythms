@@ -1,10 +1,9 @@
 #include <iostream>
 #include <string>
 
-// Структура вузла бінарного дерева
 struct TreeNode {
-    std::string name;  // Ім'я абонента
-    std::string phone; // Номер телефону
+    std::string name;  
+    std::string phone; 
     TreeNode* left;
     TreeNode* right;
 
@@ -12,7 +11,6 @@ struct TreeNode {
         : name(name), phone(phone), left(nullptr), right(nullptr) {}
 };
 
-// Функція для вставки елемента в дерево
 TreeNode* insert(TreeNode* root, const std::string& name, const std::string& phone) {
     if (!root) {
         return new TreeNode(name, phone);
@@ -25,7 +23,6 @@ TreeNode* insert(TreeNode* root, const std::string& name, const std::string& pho
     return root;
 }
 
-// Функція для пошуку елемента в дереві
 TreeNode* search(TreeNode* root, const std::string& name) {
     if (!root || root->name == name) {
         return root;
@@ -37,7 +34,6 @@ TreeNode* search(TreeNode* root, const std::string& name) {
     }
 }
 
-// Функція для знаходження найменшого вузла (потрібно для видалення)
 TreeNode* findMin(TreeNode* root) {
     while (root && root->left) {
         root = root->left;
@@ -45,7 +41,7 @@ TreeNode* findMin(TreeNode* root) {
     return root;
 }
 
-// Функція для видалення елемента з дерева
+
 TreeNode* remove(TreeNode* root, const std::string& name) {
     if (!root) {
         return root;
@@ -55,7 +51,7 @@ TreeNode* remove(TreeNode* root, const std::string& name) {
     } else if (name > root->name) {
         root->right = remove(root->right, name);
     } else {
-        // Вузол знайдено
+      
         if (!root->left) {
             TreeNode* temp = root->right;
             delete root;
@@ -73,7 +69,6 @@ TreeNode* remove(TreeNode* root, const std::string& name) {
     return root;
 }
 
-// Функція для виводу дерева у симетричному порядку
 void inOrder(TreeNode* root) {
     if (root) {
         inOrder(root->left);
@@ -85,7 +80,6 @@ void inOrder(TreeNode* root) {
 int main() {
     TreeNode* phoneBook = nullptr;
 
-    // Додавання елементів
     phoneBook = insert(phoneBook, "Руденко", "99-479-09-82");
     phoneBook = insert(phoneBook, "Векліч", "99-234-56-27");
     phoneBook = insert(phoneBook, "Шелест", "50-345-67-38");
@@ -96,7 +90,6 @@ int main() {
     std::cout << "Телефонний довідник після вставки елементів:" << std::endl;
     inOrder(phoneBook);
 
-    // Пошук елемента
     std::string searchName = "Векліч";
     TreeNode* result = search(phoneBook, searchName);
     if (result) {
@@ -105,7 +98,6 @@ int main() {
         std::cout << "\nАбонента " << searchName << " не знайдено." << std::endl;
     }
 
-    // Видалення елемента
     std::cout << "\nВидалення абонента Veklich...\n";
     phoneBook = remove(phoneBook, "Векліч");
 
