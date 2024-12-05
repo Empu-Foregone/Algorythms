@@ -1,21 +1,17 @@
 #include <iostream>
 #include <vector>
-#include <chrono> // для вимірювання часу
-#include <iomanip> // для форматування виводу
-#include <cstdlib> // для генерації випадкових чисел
+#include <chrono> 
+#include <iomanip> 
+#include <cstdlib> 
 
-// Структура для збору статистики
 struct SortStats {
-    size_t comparisons = 0;   // Кількість порівнянь
-    size_t assignments = 0;   // Кількість присвоєнь
+    size_t comparisons = 0;   
+    size_t assignments = 0;  
 };
-
-// Функція злиття двох відсортованих частин
 void merge(std::vector<int>& arr, size_t left, size_t mid, size_t right, SortStats& stats) {
     size_t n1 = mid - left + 1;
     size_t n2 = right - mid;
-
-    // Тимчасові масиви
+    
     std::vector<int> L(n1), R(n2);
 
     for (size_t i = 0; i < n1; ++i) {
@@ -30,13 +26,13 @@ void merge(std::vector<int>& arr, size_t left, size_t mid, size_t right, SortSta
     size_t i = 0, j = 0, k = left;
 
     while (i < n1 && j < n2) {
-        stats.comparisons++; // Порівняння елементів
+        stats.comparisons++; 
         if (L[i] <= R[j]) {
             arr[k++] = L[i++];
         } else {
             arr[k++] = R[j++];
         }
-        stats.assignments++; // Присвоєння
+        stats.assignments++; 
     }
 
     while (i < n1) {
@@ -50,7 +46,6 @@ void merge(std::vector<int>& arr, size_t left, size_t mid, size_t right, SortSta
     }
 }
 
-// Рекурсивна функція сортування злиттям
 void mergeSort(std::vector<int>& arr, size_t left, size_t right, SortStats& stats) {
     if (left < right) {
         size_t mid = left + (right - left) / 2;
@@ -62,7 +57,6 @@ void mergeSort(std::vector<int>& arr, size_t left, size_t right, SortStats& stat
     }
 }
 
-// Функція для генерації масиву
 std::vector<int> generateArray(size_t n, const std::string& type) {
     std::vector<int> arr(n);
     if (type == "random") {
@@ -93,19 +87,16 @@ int main() {
 
     for (size_t n : sizes) {
         for (const auto& type : types) {
-            // Генерація масиву
+            
             std::vector<int> arr = generateArray(n, type);
 
-            // Статистика сортування
             SortStats stats;
-
-            // Вимірювання часу сортування
+        
             auto start = std::chrono::high_resolution_clock::now();
             mergeSort(arr, 0, arr.size() - 1, stats);
             auto end = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double, std::milli> duration = end - start;
 
-            // Вивід результатів
             std::cout << std::setw(10) << n
                       << std::setw(15) << type
                       << std::setw(20) << duration.count()
